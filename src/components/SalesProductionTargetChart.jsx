@@ -156,7 +156,7 @@ export default function SalesProductionTargetChart() {
       <div className="h-80 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={points} margin={{ top: 8, right: 16, bottom: 8, left: 20 }}>
-            <CartesianGrid vertical={false} stroke="var(--chart-grid)" strokeDasharray="3 3" />
+            <CartesianGrid  stroke="var(--chart-grid)" strokeDasharray="3 3" />
             <XAxis
               dataKey="label"
               axisLine={{ stroke: 'var(--chart-axis-line)' }}

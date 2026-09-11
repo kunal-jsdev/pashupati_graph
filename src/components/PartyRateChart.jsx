@@ -294,7 +294,7 @@ export default function PartyRateChart() {
       <div className="h-80 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={monthlyPoints} margin={{ top: 20, right: 20, bottom: 20, left: 10 }}>
-            <CartesianGrid vertical={false} stroke="var(--chart-grid)" strokeDasharray="3 3" />
+            <CartesianGrid  stroke="var(--chart-grid)" strokeDasharray="3 3" />
             <XAxis
               dataKey="monthLabel"
               axisLine={{ stroke: 'var(--chart-axis-line)' }}
@@ -302,9 +302,6 @@ export default function PartyRateChart() {
               label={{
                 value: 'Month',
                 position: 'insideBottom',
-
-
-
               }}
               tick={{ fontSize: 12, fill: 'var(--ink-secondary)' }}
             />
@@ -315,8 +312,6 @@ export default function PartyRateChart() {
                 angle: -90,
                 position: 'insideLeft',
                 offset: 0,
-
-
               }}
               tickLine={false}
               width={40}

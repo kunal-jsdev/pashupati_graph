@@ -15,7 +15,7 @@ export default function Landing() {
       <div className="space-y-8">
         <section>
           <div className="mb-3 flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-gray-900">Graph 1 — Sales vs Production vs Target Price</h2>
+            <h2 className="text-lg font-semibold text-gray-900">Graph 1 — Sales Production vs Target Price</h2>
             <span className="rounded-full bg-rose-50 px-3 py-1 text-xs font-medium text-rose-700">
               Margin Compression
             </span>
@@ -25,7 +25,17 @@ export default function Landing() {
 
         <section>
           <div className="mb-3 flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-gray-900">Graph 2 — Party-wise Rate Fluctuation</h2>
+            <h2 className="text-lg font-semibold text-gray-900">Graph 2 — Demand & Gap</h2>
+            <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700">
+              Demand & Fulfilment
+            </span>
+          </div>
+          <DemandVsSalesChart />
+        </section>
+
+        <section>
+          <div className="mb-3 flex items-center justify-between">
+            <h2 className="text-lg font-semibold text-gray-900">Graph 3 — Party-wise Rate Fluctuation</h2>
             <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700">
               Pricing Fluctuation
             </span>
@@ -33,15 +43,6 @@ export default function Landing() {
           <PartyRateChart />
         </section>
 
-        <section>
-          <div className="mb-3 flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-gray-900">Graph 3 — Demand & Gap</h2>
-            <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700">
-              Demand & Fulfilment
-            </span>
-          </div>
-          <DemandVsSalesChart />
-        </section>
       </div>
     </div>
   )

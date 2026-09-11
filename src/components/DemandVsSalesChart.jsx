@@ -171,7 +171,7 @@ export default function DemandVsSalesChart() {
         <div className="h-80 w-full">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={rows} margin={{ top: 8, right: 8, bottom: 24, left: 20 }} barGap={2} barCategoryGap="18%">
-              <CartesianGrid vertical={false} stroke="var(--chart-grid)" strokeDasharray="3 3" />
+              <CartesianGrid  stroke="var(--chart-grid)" strokeDasharray="3 3" />
               <XAxis
                 dataKey="name"
                 axisLine={{ stroke: 'var(--chart-axis-line)' }}
