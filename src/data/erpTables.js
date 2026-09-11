@@ -87,6 +87,18 @@ export const ORDER2 = []
 // SALE2 -> ITEM_CODE, QTY, V_DATE, STATUS (1 = Success, 2 = Cancel)
 export const SALE2 = []
 
+
+export const PARTY_MAST = [
+  { CODE: 'P001', NAME: 'Reliance Infra' },
+  { CODE: 'P002', NAME: 'Tata Chemicals' },
+  { CODE: 'P003', NAME: 'Supreme Industries' },
+  { CODE: 'P004', NAME: 'Astral Pipes' },
+  { CODE: 'P005', NAME: 'Finolex Industries' },
+  { CODE: 'P006', NAME: 'Pidilite Industries' },
+  { CODE: 'P007', NAME: 'Havells India' },
+  { CODE: 'P008', NAME: 'Jain Irrigation' },
+]
+
 // Rows are generated per calendar day (not just a few per month) so that a
 // partial period like MTD samples enough of both tables to preserve the
 // intended demand/fulfilment ratio - a handful of random monthly rows would

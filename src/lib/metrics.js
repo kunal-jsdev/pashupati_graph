@@ -1,4 +1,4 @@
-import { ITEMGRAM_MAST, ORDER2, SALE2, TODAY_ISO } from '../data/erpTables'
+import { ITEMGRAM_MAST, ORDER2, SALE2, PARTY_MAST, TODAY_ISO } from '../data/erpTables'
 import { bandFor, DEFAULT_THRESHOLDS } from './thresholds'
 
 const KG_PER_MT = 1000
@@ -110,3 +110,104 @@ export function computeGradeMetrics({
 export function getGradeFamilies() {
   return GRADE_FAMILIES.map(({ key, label }) => ({ key, label }))
 }
+
+export function getParties() {
+  return PARTY_MAST
+}
+
+
+export function fetchPartyRateData(partyCode, gradeCode) {
+  const xLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
+
+  if (partyCode === 'P001' && gradeCode === 'HDPEAP') {
+    return {
+      xLabels,
+      yValues: [118.0, 119.0, 119.0, 123.0, 124.0, 124.5],
+    }
+  }
+
+  if (partyCode === 'P007' && gradeCode === 'ABSREG') {
+    return {
+      xLabels,
+      yValues: [null, null, null, null, null, 142.0],
+    }
+  }
+
+  if (partyCode === 'P005' && gradeCode === 'PVCA') {
+    return {
+      xLabels,
+      yValues: [130.0, 131.5, 132.0, null, 134.0, 135.0],
+    }
+  }
+
+  const partySeed = (partyCode || '').charCodeAt((partyCode || '').length - 1) || 1
+  const gradeSeed = (gradeCode || '').charCodeAt((gradeCode || '').length - 1) || 1
+  const baseRate = 100 + ((partySeed * 7 + gradeSeed * 13) % 50)
+
+  const yValues = xLabels.map((_, i) => {
+    const v = baseRate + i * 1.2 + Math.sin((i + partySeed) * 1.4) * 2.5
+    return Math.round(v * 10) / 10
+  })
+
+  return { xLabels, yValues }
+}
+
+
+export function computePartyRateMetrics({ xLabels, yValues }) {
+  const monthlyPoints = xLabels.map((label, idx) => ({
+    monthLabel: label,
+    rate: yValues[idx] ?? null,
+  }))
+
+  const validRates = yValues.filter((v) => v !== null && v !== undefined)
+
+  if (validRates.length < 2) {
+    return {
+      insufficientHistory: true,
+      monthlyPoints,
+      mean: null,
+      latestVsMean: null,
+      momShift: null,
+      prevMonthContext: null,
+      yMin: 0,
+      yMax: 100,
+    }
+  }
+
+  const sum = validRates.reduce((acc, val) => acc + val, 0)
+  const mean = Math.round((sum / validRates.length) * 10) / 10
+
+  const latestRate = validRates[validRates.length - 1]
+  const prevRate = validRates[validRates.length - 2]
+
+  const latestVsMean = Math.round((latestRate - mean) * 10) / 10
+  const momShift = Math.round((latestRate - prevRate) * 10) / 10
+
+  const latestIdx = yValues.lastIndexOf(latestRate)
+  const prevIdx = yValues.lastIndexOf(prevRate)
+  const skipped = latestIdx - prevIdx > 1
+  const prevMonthContext = skipped
+    ? `Compared to ${xLabels[prevIdx]} (${xLabels[latestIdx - 1]} had no data)`
+    : `Compared to ${xLabels[prevIdx]}`
+
+  const allRates = validRates.concat(mean)
+  const minRate = Math.min(...allRates)
+  const maxRate = Math.max(...allRates)
+
+  const yMin = Math.floor(minRate) - 2
+  const yMax = Math.ceil(maxRate) + 2
+
+  return {
+    insufficientHistory: false,
+    monthlyPoints,
+    mean,
+    latestVsMean,
+    momShift,
+    prevMonthContext,
+    yMin,
+    yMax,
+  }
+}
+
+
+
